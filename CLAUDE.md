@@ -30,3 +30,9 @@ This is a monorepo for a spec-driven, full-stack Todo web app:
 - API endpoints: @specs/api/rest-endpoints.md
 - DB schema: @specs/database/schema.md
 - UI pages/components: @specs/ui/pages.md, @specs/ui/components.md
+
+## Active Technologies
+- Neon Serverless PostgreSQL (cloud-hosted) (001-phase2-implementation)
+
+## Recent Changes
+- 001-phase2-implementation: Added Neon Serverless PostgreSQL (cloud-hosted)

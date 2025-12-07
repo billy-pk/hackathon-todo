@@ -35,7 +35,11 @@ The backend handles:
 ## JWT Requirements
 - Same secret (`BETTER_AUTH_SECRET`) shared between frontend and backend
 - Payload must include:
-
+  {
+"user_id": "<uuid or string>",
+"email": "<string>",
+"exp": "<timestamp>"
+  }
 
 ---
 
