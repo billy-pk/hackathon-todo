@@ -18,10 +18,10 @@
 
 **Tasks**:
 
-- [ ] T001 Create monorepo directory structure (backend/, frontend/, specs/)
-- [ ] T002 [P] Initialize backend project with UV in backend/ directory
-- [ ] T003 [P] Initialize frontend project with create-next-app in frontend/ directory
-- [ ] T004 [P] Create backend pyproject.toml with FastAPI, SQLModel, python-jose, pydantic, uvicorn dependencies
+- [X] T001 Create monorepo directory structure (backend/, frontend/, specs/)
+- [X] T002 [P] Initialize backend project with UV in backend/ directory
+- [X] T003 [P] Initialize frontend project with create-next-app in frontend/ directory
+- [X] T004 [P] Create backend pyproject.toml with FastAPI, SQLModel, python-jose, pydantic, uvicorn dependencies
 - [ ] T005 [P] Create frontend package.json with Next.js 16+, React 19+, TailwindCSS, Better Auth dependencies
 - [ ] T006 [P] Create backend .env.example with DATABASE_URL, BETTER_AUTH_SECRET, API_HOST, API_PORT
 - [ ] T007 [P] Create frontend .env.local.example with NEXT_PUBLIC_API_URL, BETTER_AUTH_SECRET
