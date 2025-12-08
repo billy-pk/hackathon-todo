@@ -36,3 +36,4 @@ This is a monorepo for a spec-driven, full-stack Todo web app:
 
 ## Recent Changes
 - 001-phase2-implementation: Added Neon Serverless PostgreSQL (cloud-hosted)
+- use context7 mcp server to get up-to-date, version-specific documentation and code examples of libraries.

@@ -22,13 +22,13 @@
 - [X] T002 [P] Initialize backend project with UV in backend/ directory
 - [X] T003 [P] Initialize frontend project with create-next-app in frontend/ directory
 - [X] T004 [P] Create backend pyproject.toml with FastAPI, SQLModel, python-jose, pydantic, uvicorn dependencies
-- [ ] T005 [P] Create frontend package.json with Next.js 16+, React 19+, TailwindCSS, Better Auth dependencies
-- [ ] T006 [P] Create backend .env.example with DATABASE_URL, BETTER_AUTH_SECRET, API_HOST, API_PORT
-- [ ] T007 [P] Create frontend .env.local.example with NEXT_PUBLIC_API_URL, BETTER_AUTH_SECRET
-- [ ] T008 [P] Create backend .gitignore for Python (.venv/, __pycache__, *.pyc, .env)
-- [ ] T009 [P] Create frontend .gitignore for Next.js (.next/, node_modules/, .env.local)
-- [ ] T010 [P] Create backend README.md with setup instructions from quickstart.md
-- [ ] T011 [P] Create frontend README.md with setup instructions from quickstart.md
+- [X] T005 [P] Create frontend package.json with Next.js 16+, React 19+, TailwindCSS, Better Auth dependencies
+- [X] T006 [P] Create backend .env.example with DATABASE_URL, BETTER_AUTH_SECRET, API_HOST, API_PORT
+- [X] T007 [P] Create frontend .env.local.example with NEXT_PUBLIC_API_URL, BETTER_AUTH_SECRET
+- [X] T008 [P] Create backend .gitignore for Python (.venv/, __pycache__, *.pyc, .env)
+- [X] T009 [P] Create frontend .gitignore for Next.js (.next/, node_modules/, .env.local)
+- [X] T010 [P] Create backend README.md with setup instructions from quickstart.md
+- [X] T011 [P] Create frontend README.md with setup instructions from quickstart.md
 
 ---
 
@@ -38,18 +38,18 @@
 
 **Tasks**:
 
-- [ ] T012 Create backend/config.py to load environment variables (DATABASE_URL, BETTER_AUTH_SECRET, etc.)
-- [ ] T013 Create backend/db.py with SQLAlchemy engine and session management (connection pooling: pool_size=5, max_overflow=10)
-- [ ] T014 Create backend/models.py with Task SQLModel definition per data-model.md
-- [ ] T015 Create backend/schemas.py with Pydantic schemas (TaskCreate, TaskUpdate, TaskResponse, TaskListResponse)
-- [ ] T016 Create database migration backend/migrations/001_create_tasks_table.sql from data-model.md
-- [ ] T017 Create backend/scripts/migrate.py to execute database migrations
-- [ ] T018 Run database migration to create tasks table in Neon PostgreSQL
-- [ ] T019 Create backend/middleware.py with JWT authentication middleware (verify_token function)
-- [ ] T020 Create backend/main.py with FastAPI app initialization and CORS configuration
-- [ ] T021 Create frontend/lib/types.ts with TypeScript interfaces (Task, CreateTaskData, UpdateTaskData, TaskListResponse)
-- [ ] T022 [P] Create frontend/tailwind.config.ts with custom theme configuration
-- [ ] T023 [P] Create frontend/app/layout.tsx as root layout with metadata and font configuration
+- [X] T012 Create backend/config.py to load environment variables (DATABASE_URL, BETTER_AUTH_SECRET, etc.)
+- [X] T013 Create backend/db.py with SQLAlchemy engine and session management (connection pooling: pool_size=5, max_overflow=10)
+- [X] T014 Create backend/models.py with Task SQLModel definition per data-model.md
+- [X] T015 Create backend/schemas.py with Pydantic schemas (TaskCreate, TaskUpdate, TaskResponse, TaskListResponse)
+- [X] T016 Create database migration backend/migrations/001_create_tasks_table.sql from data-model.md
+- [X] T017 Create backend/scripts/migrate.py to execute database migrations
+- [X] T018 Run database migration to create tasks table in Neon PostgreSQL
+- [X] T019 Create backend/middleware.py with JWT authentication middleware (verify_token function)
+- [X] T020 Create backend/main.py with FastAPI app initialization and CORS configuration
+- [X] T021 Create frontend/lib/types.ts with TypeScript interfaces (Task, CreateTaskData, UpdateTaskData, TaskListResponse)
+- [X] T022 [P] Create frontend/tailwind.config.ts with custom theme configuration
+- [X] T023 [P] Create frontend/app/layout.tsx as root layout with metadata and font configuration
 
 ---
 
@@ -61,18 +61,18 @@
 
 **Tasks**:
 
-- [ ] T024 [US1] Configure Better Auth in frontend/lib/auth.ts with JWT plugin and BETTER_AUTH_SECRET
-- [ ] T025 [US1] Create frontend/app/(auth)/layout.tsx for centered auth form layout
-- [ ] T026 [US1] Create frontend/app/(auth)/signup/page.tsx with registration form (email, password fields)
-- [ ] T027 [US1] Create frontend/app/(auth)/signin/page.tsx with sign-in form (email, password fields)
-- [ ] T028 [US1] Implement auth form validation (email format, password minimum 8 characters)
-- [ ] T029 [US1] Integrate Better Auth signup flow in signup page (POST to Better Auth endpoint)
-- [ ] T030 [US1] Integrate Better Auth signin flow in signin page (POST to Better Auth endpoint)
-- [ ] T031 [US1] Implement JWT token storage in frontend (use Better Auth session management)
-- [ ] T032 [US1] Update backend/middleware.py to validate JWT signature using python-jose
-- [ ] T033 [US1] Update backend/middleware.py to verify JWT expiration time
-- [ ] T034 [US1] Update backend/middleware.py to extract user_id from JWT payload
-- [ ] T035 [US1] Update backend/main.py to apply JWT middleware to all /api routes
+- [X] T024 [US1] Configure Better Auth in frontend/lib/auth.ts with JWT plugin and BETTER_AUTH_SECRET
+- [X] T025 [US1] Create frontend/app/(auth)/layout.tsx for centered auth form layout
+- [X] T026 [US1] Create frontend/app/(auth)/signup/page.tsx with registration form (email, password fields)
+- [X] T027 [US1] Create frontend/app/(auth)/signin/page.tsx with sign-in form (email, password fields)
+- [X] T028 [US1] Implement auth form validation (email format, password minimum 8 characters)
+- [X] T029 [US1] Integrate Better Auth signup flow in signup page (POST to Better Auth endpoint)
+- [X] T030 [US1] Integrate Better Auth signin flow in signin page (POST to Better Auth endpoint)
+- [X] T031 [US1] Implement JWT token storage in frontend (use Better Auth session management)
+- [X] T032 [US1] Update backend/middleware.py to validate JWT signature using python-jose
+- [X] T033 [US1] Update backend/middleware.py to verify JWT expiration time
+- [X] T034 [US1] Update backend/middleware.py to extract user_id from JWT payload
+- [X] T035 [US1] Update backend/main.py to apply JWT middleware to all /api routes
 
 ---
 
@@ -86,22 +86,22 @@
 
 **Tasks**:
 
-- [ ] T036 [US2] Create backend/routes/tasks.py with router initialization
-- [ ] T037 [US2] Implement POST /api/{user_id}/tasks endpoint (create task, assign user_id from JWT)
-- [ ] T038 [US2] Implement GET /api/{user_id}/tasks endpoint (list tasks filtered by user_id, sorted by created_at DESC)
-- [ ] T039 [US2] Add status filter query parameter to GET /api/{user_id}/tasks (all/pending/completed)
-- [ ] T040 [US2] Verify user_id in URL matches user_id in JWT (403 Forbidden if mismatch)
-- [ ] T041 [US2] Mount tasks router in backend/main.py
-- [ ] T042 [US2] Create frontend/lib/api.ts with typed API client class
-- [ ] T043 [US2] Implement api.listTasks(userId) method with automatic JWT attachment
-- [ ] T044 [US2] Implement api.createTask(userId, data) method with automatic JWT attachment
-- [ ] T045 [US2] Create frontend/components/TaskForm.tsx for create/edit task form (title, description inputs)
-- [ ] T046 [US2] Create frontend/components/TaskItem.tsx to display single task (title, description, timestamps)
-- [ ] T047 [US2] Create frontend/components/TaskList.tsx to render array of TaskItem components
-- [ ] T048 [US2] Create frontend/components/Navbar.tsx with user info and logout button
-- [ ] T049 [US2] Create frontend/app/(dashboard)/layout.tsx with Navbar
-- [ ] T050 [US2] Create frontend/app/(dashboard)/tasks/page.tsx with TaskList and TaskForm integration
-- [ ] T051 [US2] Implement optimistic UI updates (add task to list immediately, rollback on error)
+- [X] T036 [US2] Create backend/routes/tasks.py with router initialization
+- [X] T037 [US2] Implement POST /api/{user_id}/tasks endpoint (create task, assign user_id from JWT)
+- [X] T038 [US2] Implement GET /api/{user_id}/tasks endpoint (list tasks filtered by user_id, sorted by created_at DESC)
+- [X] T039 [US2] Add status filter query parameter to GET /api/{user_id}/tasks (all/pending/completed)
+- [X] T040 [US2] Verify user_id in URL matches user_id in JWT (403 Forbidden if mismatch)
+- [X] T041 [US2] Mount tasks router in backend/main.py
+- [X] T042 [US2] Create frontend/lib/api.ts with typed API client class
+- [X] T043 [US2] Implement api.listTasks(userId) method with automatic JWT attachment
+- [X] T044 [US2] Implement api.createTask(userId, data) method with automatic JWT attachment
+- [X] T045 [US2] Create frontend/components/TaskForm.tsx for create/edit task form (title, description inputs)
+- [X] T046 [US2] Create frontend/components/TaskItem.tsx to display single task (title, description, timestamps)
+- [X] T047 [US2] Create frontend/components/TaskList.tsx to render array of TaskItem components
+- [X] T048 [US2] Create frontend/components/Navbar.tsx with user info and logout button
+- [X] T049 [US2] Create frontend/app/(dashboard)/layout.tsx with Navbar
+- [X] T050 [US2] Create frontend/app/(dashboard)/tasks/page.tsx with TaskList and TaskForm integration
+- [X] T051 [US2] Implement optimistic UI updates (add task to list immediately, rollback on error)
 
 ---
 
@@ -115,17 +115,17 @@
 
 **Tasks**:
 
-- [ ] T052 [US3] Implement GET /api/{user_id}/tasks/{task_id} endpoint in backend/routes/tasks.py
-- [ ] T053 [US3] Implement PUT /api/{user_id}/tasks/{task_id} endpoint (update title/description, verify ownership)
-- [ ] T054 [US3] Implement DELETE /api/{user_id}/tasks/{task_id} endpoint (verify ownership before deletion)
-- [ ] T055 [US3] Return 404 Not Found if task doesn't exist
-- [ ] T056 [US3] Return 403 Forbidden if user attempts to update/delete another user's task
-- [ ] T057 [US3] Implement api.getTask(userId, taskId) method in frontend/lib/api.ts
-- [ ] T058 [US3] Implement api.updateTask(userId, taskId, data) method in frontend/lib/api.ts
-- [ ] T059 [US3] Implement api.deleteTask(userId, taskId) method in frontend/lib/api.ts
-- [ ] T060 [US3] Add edit mode to frontend/components/TaskForm.tsx (populate form with existing task data)
-- [ ] T061 [US3] Add delete button to frontend/components/TaskItem.tsx with confirmation dialog
-- [ ] T062 [US3] Add edit button to frontend/components/TaskItem.tsx to open edit form
+- [X] T052 [US3] Implement GET /api/{user_id}/tasks/{task_id} endpoint in backend/routes/tasks.py
+- [X] T053 [US3] Implement PUT /api/{user_id}/tasks/{task_id} endpoint (update title/description, verify ownership)
+- [X] T054 [US3] Implement DELETE /api/{user_id}/tasks/{task_id} endpoint (verify ownership before deletion)
+- [X] T055 [US3] Return 404 Not Found if task doesn't exist
+- [X] T056 [US3] Return 403 Forbidden if user attempts to update/delete another user's task
+- [X] T057 [US3] Implement api.getTask(userId, taskId) method in frontend/lib/api.ts
+- [X] T058 [US3] Implement api.updateTask(userId, taskId, data) method in frontend/lib/api.ts
+- [X] T059 [US3] Implement api.deleteTask(userId, taskId) method in frontend/lib/api.ts
+- [X] T060 [US3] Add edit mode to frontend/components/TaskForm.tsx (populate form with existing task data)
+- [X] T061 [US3] Add delete button to frontend/components/TaskItem.tsx with confirmation dialog
+- [X] T062 [US3] Add edit button to frontend/components/TaskItem.tsx to open edit form
 
 ---
 
@@ -139,13 +139,13 @@
 
 **Tasks**:
 
-- [ ] T063 [US4] Implement PATCH /api/{user_id}/tasks/{task_id}/complete endpoint (toggle completed field)
-- [ ] T064 [US4] Update updated_at timestamp when completion status changes
-- [ ] T065 [US4] Implement api.toggleComplete(userId, taskId) method in frontend/lib/api.ts
-- [ ] T066 [US4] Add completion checkbox to frontend/components/TaskItem.tsx (toggle on click)
-- [ ] T067 [US4] Add status filter dropdown to frontend/app/(dashboard)/tasks/page.tsx (all/pending/completed)
-- [ ] T068 [US4] Update TaskList to filter tasks client-side based on selected status
-- [ ] T069 [US4] Add visual distinction for completed tasks (strikethrough title, muted colors)
+- [X] T063 [US4] Implement PATCH /api/{user_id}/tasks/{task_id}/complete endpoint (toggle completed field)
+- [X] T064 [US4] Update updated_at timestamp when completion status changes
+- [X] T065 [US4] Implement api.toggleComplete(userId, taskId) method in frontend/lib/api.ts
+- [X] T066 [US4] Add completion checkbox to frontend/components/TaskItem.tsx (toggle on click)
+- [X] T067 [US4] Add status filter dropdown to frontend/app/(dashboard)/tasks/page.tsx (all/pending/completed)
+- [X] T068 [US4] Update TaskList to filter tasks client-side based on selected status
+- [X] T069 [US4] Add visual distinction for completed tasks (strikethrough title, muted colors)
 
 ---
 
@@ -159,15 +159,15 @@
 
 **Tasks**:
 
-- [ ] T070 [US5] Implement TailwindCSS responsive breakpoints in TaskList (sm:, md:, lg: variants)
-- [ ] T071 [US5] Implement TailwindCSS responsive breakpoints in TaskForm (stack inputs on mobile, side-by-side on desktop)
-- [ ] T072 [US5] Implement TailwindCSS responsive breakpoints in Navbar (hamburger menu on mobile, full nav on desktop)
-- [ ] T073 [US5] Add ARIA labels to all interactive elements (buttons, inputs, forms)
-- [ ] T074 [US5] Implement keyboard navigation (Tab, Enter, Escape key handling)
-- [ ] T075 [US5] Test layout on mobile viewport (320px-768px width)
-- [ ] T076 [US5] Test layout on desktop viewport (768px-2560px width)
-- [ ] T077 [US5] Implement loading states for async operations (spinner/skeleton screens)
-- [ ] T078 [US5] Implement error handling UI (toast notifications for errors)
+- [X] T070 [US5] Implement TailwindCSS responsive breakpoints in TaskList (sm:, md:, lg: variants)
+- [X] T071 [US5] Implement TailwindCSS responsive breakpoints in TaskForm (stack inputs on mobile, side-by-side on desktop)
+- [X] T072 [US5] Implement TailwindCSS responsive breakpoints in Navbar (hamburger menu on mobile, full nav on desktop)
+- [X] T073 [US5] Add ARIA labels to all interactive elements (buttons, inputs, forms)
+- [X] T074 [US5] Implement keyboard navigation (Tab, Enter, Escape key handling)
+- [X] T075 [US5] Test layout on mobile viewport (320px-768px width)
+- [X] T076 [US5] Test layout on desktop viewport (768px-2560px width)
+- [X] T077 [US5] Implement loading states for async operations (spinner/skeleton screens)
+- [X] T078 [US5] Implement error handling UI (toast notifications for errors)
 
 ---
 
@@ -177,21 +177,21 @@
 
 **Tasks**:
 
-- [ ] T079 [P] Add input validation error messages in TaskForm (display validation errors)
-- [ ] T080 [P] Implement 401 Unauthorized redirect to signin page in API client
-- [ ] T081 [P] Implement 403 Forbidden error handling with user-friendly message
-- [ ] T082 [P] Implement 404 Not Found error handling
-- [ ] T083 [P] Implement 500 Internal Server Error handling with generic message
-- [ ] T084 [P] Add loading spinners to all async buttons (prevent double-submit)
-- [ ] T085 [P] Implement frontend/app/page.tsx landing page (welcome message, sign in/sign up links)
-- [ ] T086 [P] Add database connection health check endpoint GET /api/health
-- [ ] T087 [P] Verify all timestamps are stored in UTC ISO8601 format
-- [ ] T088 [P] Verify database indexes are created (user_id, user_id+created_at, user_id+completed)
-- [ ] T089 [P] Test concurrent task operations (create, update, delete from multiple tabs)
-- [ ] T090 [P] Verify data isolation (user A cannot see user B's tasks)
-- [ ] T091 [P] Run frontend build (npm run build) and verify no errors
-- [ ] T092 [P] Run backend with uvicorn and verify startup successful
-- [ ] T093 [P] Update root README.md with project overview and quick start instructions
+- [X] T079 [P] Add input validation error messages in TaskForm (display validation errors)
+- [X] T080 [P] Implement 401 Unauthorized redirect to signin page in API client
+- [X] T081 [P] Implement 403 Forbidden error handling with user-friendly message
+- [X] T082 [P] Implement 404 Not Found error handling
+- [X] T083 [P] Implement 500 Internal Server Error handling with generic message
+- [X] T084 [P] Add loading spinners to all async buttons (prevent double-submit)
+- [X] T085 [P] Implement frontend/app/page.tsx landing page (welcome message, sign in/sign up links)
+- [X] T086 [P] Add database connection health check endpoint GET /api/health
+- [X] T087 [P] Verify all timestamps are stored in UTC ISO8601 format
+- [X] T088 [P] Verify database indexes are created (user_id, user_id+created_at, user_id+completed)
+- [X] T089 [P] Test concurrent task operations (create, update, delete from multiple tabs)
+- [X] T090 [P] Verify data isolation (user A cannot see user B's tasks)
+- [X] T091 [P] Run frontend build (npm run build) and verify no errors
+- [X] T092 [P] Run backend with uvicorn and verify startup successful
+- [X] T093 [P] Update root README.md with project overview and quick start instructions
 
 ---
 
