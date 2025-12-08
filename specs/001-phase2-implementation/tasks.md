@@ -269,16 +269,16 @@ This delivers:
 
 After completing tasks, verify:
 
-- [ ] All user stories have independent tests that pass
-- [ ] JWT authentication works (sign up, sign in, token validation)
-- [ ] User data isolation works (user A cannot see user B's tasks)
-- [ ] All API endpoints follow OpenAPI spec in contracts/openapi.yaml
-- [ ] All database operations use proper indexes for performance
-- [ ] Frontend is responsive on mobile (320px) and desktop (2560px)
-- [ ] Error handling provides user-friendly messages
-- [ ] All timestamps are in UTC ISO8601 format
-- [ ] Application meets performance goals (< 500ms API, < 2s frontend load)
-- [ ] Code follows project structure in plan.md
+- [X] All user stories have independent tests that pass
+- [X] JWT authentication works (sign up, sign in, token validation)
+- [X] User data isolation works (user A cannot see user B's tasks)
+- [X] All API endpoints follow OpenAPI spec in contracts/openapi.yaml
+- [X] All database operations use proper indexes for performance
+- [X] Frontend is responsive on mobile (320px) and desktop (2560px)
+- [X] Error handling provides user-friendly messages
+- [X] All timestamps are in UTC ISO8601 format
+- [X] Application meets performance goals (< 500ms API, < 2s frontend load)
+- [X] Code follows project structure in plan.md
 
 ---
 
