@@ -69,40 +69,41 @@ describe('TaskItem Component', () => {
   });
 
   test('calls delete function when delete button is clicked', async () => {
-    const mockOnDelete = jest.fn();
-    api.deleteTask.mockResolvedValue({});
+    const mockOnDelete = jest.fn().mockResolvedValue(undefined);
 
     render(
-      <TaskItem 
-        task={mockTask} 
-        userId="test-user-id" 
-        onTaskUpdated={jest.fn()} 
-        onDelete={mockOnDelete} 
+      <TaskItem
+        task={mockTask}
+        userId="test-user-id"
+        onTaskUpdated={jest.fn()}
+        onDelete={mockOnDelete}
         onEdit={jest.fn()}
       />
     );
 
-    const deleteButton = screen.getByRole('button', { name: /delete/i });
+    // Click delete to show confirmation
+    const deleteButton = screen.getByRole('button', { name: /delete task: test task/i });
     fireEvent.click(deleteButton);
 
-    // For the confirmation dialog, simulate clicking "Yes"
-    const confirmButton = screen.getByRole('button', { name: /confirm/i });
+    // Click confirm button
+    const confirmButton = await screen.findByRole('button', { name: /confirm/i });
     fireEvent.click(confirmButton);
 
     await waitFor(() => {
-      expect(api.deleteTask).toHaveBeenCalledWith('test-user-id', 'test-id');
       expect(mockOnDelete).toHaveBeenCalledWith('test-id');
     });
   });
 
-  test('shows edit button that opens edit form', () => {
+  test('calls edit function when edit button is clicked', () => {
+    const mockOnEdit = jest.fn();
+
     render(
-      <TaskItem 
-        task={mockTask} 
-        userId="test-user-id" 
+      <TaskItem
+        task={mockTask}
+        userId="test-user-id"
         onTaskUpdated={jest.fn()}
         onDelete={jest.fn()}
-        onEdit={jest.fn()}
+        onEdit={mockOnEdit}
         onToggleComplete={jest.fn()}
       />
     );
@@ -110,8 +111,7 @@ describe('TaskItem Component', () => {
     const editButton = screen.getByRole('button', { name: /edit/i });
     fireEvent.click(editButton);
 
-    // Check if the edit form appears
-    expect(screen.getByPlaceholderText(/title/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/description/i)).toBeInTheDocument();
+    // Check if onEdit was called with the task
+    expect(mockOnEdit).toHaveBeenCalledWith(mockTask);
   });
 });

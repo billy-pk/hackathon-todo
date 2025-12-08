@@ -34,22 +34,23 @@ describe('TaskForm Component', () => {
   test('validates required title field', async () => {
     await userEvent.setup();
     const mockOnSubmit = jest.fn(async () => {}); // Simulate a successful onSubmit
-    let component;
-    await act(async () => {
-      component = render(<TaskForm userId="test-user-id" onTaskUpdated={jest.fn()} onSubmit={mockOnSubmit} />);
-    });
 
-    const titleInput = screen.getByLabelText(/title/i);
+    const { container } = render(
+      <TaskForm userId="test-user-id" onTaskUpdated={jest.fn()} onSubmit={mockOnSubmit} />
+    );
+
+    const titleInput = screen.getByLabelText(/title/i) as HTMLInputElement;
     const descriptionInput = screen.getByLabelText(/description/i);
-    const submitButton = screen.getByRole('button', { name: /add task/i });
+    const form = container.querySelector('form') as HTMLFormElement;
 
     // Ensure title is empty
-    await act(async () => {
-      await userEvent.clear(titleInput);
-      await userEvent.type(descriptionInput, 'Test description');
-      await userEvent.click(submitButton); // Moved click inside this act
-    });
+    await userEvent.clear(titleInput);
+    await userEvent.type(descriptionInput, 'Test description');
 
+    // Submit form programmatically (bypasses HTML5 validation)
+    await act(async () => {
+      fireEvent.submit(form);
+    });
 
     await waitFor(() => {
       expect(screen.getByText(/title is required/i)).toBeInTheDocument();
