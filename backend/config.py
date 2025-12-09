@@ -1,4 +1,5 @@
 from pydantic_settings import BaseSettings
+from pydantic import ConfigDict
 from typing import Optional
 
 
@@ -6,6 +7,11 @@ class Settings(BaseSettings):
     """
     Application settings loaded from environment variables.
     """
+    model_config = ConfigDict(
+        env_file=".env",
+        case_sensitive=True
+    )
+
     # Database
     DATABASE_URL: str
 
@@ -23,10 +29,6 @@ class Settings(BaseSettings):
     # Connection Pooling (for database)
     DB_POOL_SIZE: int = 5
     DB_POOL_MAX_OVERFLOW: int = 10
-
-    class Config:
-        env_file = ".env"
-        case_sensitive = True
 
 
 # Create a single instance of settings

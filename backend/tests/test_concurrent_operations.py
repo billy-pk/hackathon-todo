@@ -10,31 +10,29 @@ from main import app
 from models import Task
 from db import get_session
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlmodel import SQLModel
+from sqlmodel import SQLModel, Session
 
 
 @pytest.fixture(scope="function")
 def test_db():
     """Create an in-memory database for testing"""
     engine = create_engine("sqlite:///./test_concurrent.db", echo=True)
-    SQLModel.metadata.create_all(bind=engine)
-    
-    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-    
+
+    # Drop all tables first to ensure clean state
+    SQLModel.metadata.drop_all(bind=engine)
+
     # Create tables
     SQLModel.metadata.create_all(bind=engine)
 
     def override_get_session():
-        try:
-            db = TestingSessionLocal()
-            yield db
-        finally:
-            db.close()
+        with Session(engine) as session:
+            yield session
 
     # We'll apply this override in each specific test
     yield engine
-    
+
+    # Clean up after test
+    SQLModel.metadata.drop_all(bind=engine)
     engine.dispose()
 
 
@@ -44,17 +42,13 @@ def test_concurrent_task_creation(mock_get_signing_key, mock_decode, test_db):
     """Test T089: Concurrent Task Creation"""
     from fastapi.testclient import TestClient
     from fastapi import Request
-    
+
     # Create app instance with test database
     engine = test_db
-    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     def override_get_session():
-        try:
-            db = TestingSessionLocal()
-            yield db
-        finally:
-            db.close()
+        with Session(engine) as session:
+            yield session
 
     app.dependency_overrides[get_session] = override_get_session
     
@@ -95,7 +89,8 @@ def test_concurrent_task_creation(mock_get_signing_key, mock_decode, test_db):
         # Verify all 3 tasks exist in the list
         response = client.get(f"/api/test_user_123/tasks", headers={"Authorization": "Bearer fake-token"})
         assert response.status_code == 200
-        tasks = response.json()
+        data = response.json()
+        tasks = data["tasks"]  # Response is {"tasks": [...], "total": ...}
         created_titles = [task["title"] for task in tasks]
         assert "Task A" in created_titles
         assert "Task B" in created_titles
@@ -108,17 +103,13 @@ def test_concurrent_task_updates(mock_get_signing_key, mock_decode, test_db):
     """Test T089: Concurrent Task Updates"""
     from fastapi.testclient import TestClient
     from fastapi import Request
-    
+
     # Create app instance with test database
     engine = test_db
-    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     def override_get_session():
-        try:
-            db = TestingSessionLocal()
-            yield db
-        finally:
-            db.close()
+        with Session(engine) as session:
+            yield session
 
     app.dependency_overrides[get_session] = override_get_session
     
@@ -185,17 +176,13 @@ def test_concurrent_task_deletion(mock_get_signing_key, mock_decode, test_db):
     """Test T089: Concurrent Delete Operations"""
     from fastapi.testclient import TestClient
     from fastapi import Request
-    
+
     # Create app instance with test database
     engine = test_db
-    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     def override_get_session():
-        try:
-            db = TestingSessionLocal()
-            yield db
-        finally:
-            db.close()
+        with Session(engine) as session:
+            yield session
 
     app.dependency_overrides[get_session] = override_get_session
     
@@ -245,17 +232,13 @@ def test_concurrent_completion_toggle(mock_get_signing_key, mock_decode, test_db
     """Test T089: Toggle Completion Concurrently"""
     from fastapi.testclient import TestClient
     from fastapi import Request
-    
+
     # Create app instance with test database
     engine = test_db
-    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     def override_get_session():
-        try:
-            db = TestingSessionLocal()
-            yield db
-        finally:
-            db.close()
+        with Session(engine) as session:
+            yield session
 
     app.dependency_overrides[get_session] = override_get_session
     

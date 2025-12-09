@@ -1,5 +1,5 @@
 from sqlmodel import Field, SQLModel
-from datetime import datetime
+from datetime import datetime, UTC
 from uuid import UUID, uuid4
 from typing import Optional
 
@@ -41,11 +41,11 @@ class Task(SQLModel, table=True):
     )
 
     created_at: datetime = Field(
-        default_factory=datetime.utcnow,
+        default_factory=lambda: datetime.now(UTC),
         description="Creation timestamp (UTC)"
     )
 
     updated_at: datetime = Field(
-        default_factory=datetime.utcnow,
+        default_factory=lambda: datetime.now(UTC),
         description="Last update timestamp (UTC)"
     )

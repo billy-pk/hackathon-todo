@@ -5,8 +5,7 @@ from unittest.mock import patch, MagicMock
 from models import Task
 from db import get_session
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlmodel import SQLModel
+from sqlmodel import SQLModel, Session
 from fastapi import Request
 
 
@@ -14,23 +13,22 @@ from fastapi import Request
 def test_db():
     """Create an in-memory database for testing"""
     engine = create_engine("sqlite:///./test_isolation.db", echo=True)
-    SQLModel.metadata.create_all(bind=engine)
-    
-    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
-    
+
+    # Drop all tables first to ensure clean state
+    SQLModel.metadata.drop_all(bind=engine)
+
     # Create tables
     SQLModel.metadata.create_all(bind=engine)
 
     def override_get_session():
-        try:
-            db = TestingSessionLocal()
-            yield db
-        finally:
-            db.close()
+        with Session(engine) as session:
+            yield session
 
     # We'll apply this override in each specific test
     yield engine
-    
+
+    # Clean up after test
+    SQLModel.metadata.drop_all(bind=engine)
     engine.dispose()
 
 
@@ -39,17 +37,13 @@ def test_db():
 def test_user_a_cannot_list_user_b_tasks(mock_get_signing_key, mock_decode, test_db):
     """Test T090: User A cannot list User B's tasks"""
     from main import app
-    
+
     # Create app instance with test database
     engine = test_db
-    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     def override_get_session():
-        try:
-            db = TestingSessionLocal()
-            yield db
-        finally:
-            db.close()
+        with Session(engine) as session:
+            yield session
 
     app.dependency_overrides[get_session] = override_get_session
     
@@ -101,17 +95,13 @@ def test_user_a_cannot_list_user_b_tasks(mock_get_signing_key, mock_decode, test
 def test_user_a_cannot_access_user_b_individual_task(mock_get_signing_key, mock_decode, test_db):
     """Test T090: User A cannot view User B's individual task"""
     from main import app
-    
+
     # Create app instance with test database
     engine = test_db
-    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     def override_get_session():
-        try:
-            db = TestingSessionLocal()
-            yield db
-        finally:
-            db.close()
+        with Session(engine) as session:
+            yield session
 
     app.dependency_overrides[get_session] = override_get_session
     
@@ -141,17 +131,13 @@ def test_user_a_cannot_access_user_b_individual_task(mock_get_signing_key, mock_
 def test_user_a_cannot_update_user_b_task(mock_get_signing_key, mock_decode, test_db):
     """Test T090: User A cannot update User B's task"""
     from main import app
-    
+
     # Create app instance with test database
     engine = test_db
-    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     def override_get_session():
-        try:
-            db = TestingSessionLocal()
-            yield db
-        finally:
-            db.close()
+        with Session(engine) as session:
+            yield session
 
     app.dependency_overrides[get_session] = override_get_session
     
@@ -185,17 +171,13 @@ def test_user_a_cannot_update_user_b_task(mock_get_signing_key, mock_decode, tes
 def test_user_a_cannot_delete_user_b_task(mock_get_signing_key, mock_decode, test_db):
     """Test T090: User A cannot delete User B's task"""
     from main import app
-    
+
     # Create app instance with test database
     engine = test_db
-    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     def override_get_session():
-        try:
-            db = TestingSessionLocal()
-            yield db
-        finally:
-            db.close()
+        with Session(engine) as session:
+            yield session
 
     app.dependency_overrides[get_session] = override_get_session
     
@@ -225,17 +207,13 @@ def test_user_a_cannot_delete_user_b_task(mock_get_signing_key, mock_decode, tes
 def test_user_a_only_sees_own_tasks(mock_get_signing_key, mock_decode, test_db):
     """Test T090: User A should only see their own tasks"""
     from main import app
-    
+
     # Create app instance with test database
     engine = test_db
-    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     def override_get_session():
-        try:
-            db = TestingSessionLocal()
-            yield db
-        finally:
-            db.close()
+        with Session(engine) as session:
+            yield session
 
     app.dependency_overrides[get_session] = override_get_session
     
@@ -278,8 +256,9 @@ def test_user_a_only_sees_own_tasks(mock_get_signing_key, mock_decode, test_db):
         mock_decode.return_value = {"user_id": "user_a_123"}
         response = client.get(f"/api/user_a_123/tasks", headers={"Authorization": "Bearer fake-token-a"})
         assert response.status_code == 200
-        user_a_tasks = response.json()
-        
+        data = response.json()
+        user_a_tasks = data["tasks"]  # Response is {"tasks": [...], "total": ...}
+
         # Verify User A only sees their tasks
         user_a_titles = [task["title"] for task in user_a_tasks]
         assert "User A Task 1" in user_a_titles
@@ -292,17 +271,13 @@ def test_user_a_only_sees_own_tasks(mock_get_signing_key, mock_decode, test_db):
 def test_database_query_filtering(mock_get_signing_key, mock_decode, test_db):
     """Test T090: Database queries properly filter by user_id"""
     from main import app
-    
+
     # Create app instance with test database
     engine = test_db
-    TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
     def override_get_session():
-        try:
-            db = TestingSessionLocal()
-            yield db
-        finally:
-            db.close()
+        with Session(engine) as session:
+            yield session
 
     app.dependency_overrides[get_session] = override_get_session
     
@@ -334,11 +309,13 @@ def test_database_query_filtering(mock_get_signing_key, mock_decode, test_db):
         mock_decode.return_value = {"user_id": "user_a_123"}
         response_a = client.get(f"/api/user_a_123/tasks", headers={"Authorization": "Bearer fake-token-a"})
         assert response_a.status_code == 200
-        user_a_tasks = response_a.json()
+        data_a = response_a.json()
+        user_a_tasks = data_a["tasks"]  # Response is {"tasks": [...], "total": ...}
         assert len(user_a_tasks) == 3
 
         mock_decode.return_value = {"user_id": "user_b_456"}
         response_b = client.get(f"/api/user_b_456/tasks", headers={"Authorization": "Bearer fake-token-b"})
         assert response_b.status_code == 200
-        user_b_tasks = response_b.json()
+        data_b = response_b.json()
+        user_b_tasks = data_b["tasks"]  # Response is {"tasks": [...], "total": ...}
         assert len(user_b_tasks) == 3
