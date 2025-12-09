@@ -50,8 +50,8 @@ export default function TasksPage() {
     try {
       setLoading(true);
       setError("");
-      const response = await api.listTasks(session.user.id, statusFilter);
-      setTasks(response.tasks);
+      const tasks = await api.listTasks(session.user.id, statusFilter);
+      setTasks(tasks || []);
     } catch (err: any) {
       console.error("=== DEBUG: Error loading tasks ===", err);
       if (err instanceof APIError && err.status === 401) {

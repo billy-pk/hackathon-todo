@@ -99,11 +99,12 @@ def verify_token(token: str) -> Optional[str]:
         print(f"=== DEBUG BACKEND: Decoded payload: {payload}")
 
         # T034: Extract user_id from the payload
-        user_id = payload.get("user_id")
+        # Better Auth uses 'id' or 'sub' field, so check both
+        user_id = payload.get("user_id") or payload.get("id") or payload.get("sub")
 
         if not user_id:
-            # Token must contain user_id
-            print(f"=== DEBUG BACKEND: Token missing user_id. Payload keys: {payload.keys()}")
+            # Token must contain user_id, id, or sub
+            print(f"=== DEBUG BACKEND: Token missing user_id/id/sub. Payload keys: {payload.keys()}")
             return None
 
         print(f"=== DEBUG BACKEND: Successfully validated token for user_id: {user_id}")
