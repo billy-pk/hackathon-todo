@@ -1,3 +1,69 @@
+# AI Agent directories
 .claude/
 .gemini/
 .qwen/
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Python virtual environments
+.venv/
+venv/
+**/.venv/
+**/venv/
+
+# Test directories (frontend tests are tracked, but in case of conflicts)
+# backend/tests/ - keep tracked
+# frontend/tests/ - keep tracked
+
+# Build outputs
+.next/
+dist/
+build/
+**/.next/
+**/dist/
+**/build/
+
+# Environment variables
+.env
+.env.local
+.env*.local
+**/.env
+**/.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Test databases
+*.db
+test*.db
+backend/test*.db
+
+# Coverage
+coverage/
+.coverage
+htmlcov/
+**/.coverage
+**/coverage/
+
+# Logs
+*.log
+logs/
+**/logs/
+
+# Cache
+__pycache__/
+**/__pycache__/
+.pytest_cache/
+**/.pytest_cache/
+.mypy_cache/
+**/.mypy_cache/
