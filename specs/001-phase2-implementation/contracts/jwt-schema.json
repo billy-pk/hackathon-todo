@@ -1,0 +1,40 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JWT Token Payload Schema",
+  "description": "Schema for JWT token payload issued by Better Auth and validated by FastAPI backend",
+  "type": "object",
+  "required": ["user_id", "email", "exp"],
+  "properties": {
+    "user_id": {
+      "type": "string",
+      "description": "Unique user identifier from Better Auth",
+      "examples": ["user_123", "550e8400-e29b-41d4-a716-446655440000"]
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "User's email address",
+      "examples": ["user@example.com"]
+    },
+    "exp": {
+      "type": "integer",
+      "description": "Token expiration time (Unix timestamp)",
+      "examples": [1733572800]
+    },
+    "iat": {
+      "type": "integer",
+      "description": "Token issued at time (Unix timestamp, optional)",
+      "examples": [1733486400]
+    }
+  },
+  "additionalProperties": false,
+  "examples": [
+    {
+      "user_id": "user_123",
+      "email": "john.doe@example.com",
+      "exp": 1733572800,
+      "iat": 1733486400
+    }
+  ],
+  "$comment": "Token validation requirements:\n1. Signature must be valid (using BETTER_AUTH_SECRET)\n2. Token must not be expired (exp > current time)\n3. user_id must match URL parameter in API requests\n4. email field is informational only (not used for authorization)"
+}

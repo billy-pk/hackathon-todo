@@ -7,11 +7,13 @@
 - Better Auth for authentication
 - API client in `/frontend/lib/api.ts`
 
-## Project Structure (target)
-- `/app`         – Routes (App Router)
-- `/components`  – Reusable UI components
-- `/lib`         – API client, helpers
-- `/styles`      – Tailwind config and globals
+## Project Structure
+- `/app`         – Routes (App Router) and globals.css
+- `/components`  – Reusable UI components (to be created)
+- `/lib`         – API client, helpers (to be created)
+- `/public`      – Static assets
+- `tailwind.config.ts` – Tailwind configuration (root)
+- `tsconfig.json` – TypeScript configuration
 
 ## API Client Rules
 - All backend calls must go through a single client in `lib/api.ts`.
@@ -35,6 +37,17 @@
   - `/tasks/new`
   - `/tasks/[id]/edit`
 
-## Development Commands (expected)
-- `npm install`
-- `npm run dev`
+## Current Setup Status
+- ✅ Next.js 16 initialized with App Router
+- ✅ TypeScript configured
+- ✅ Tailwind CSS configured
+- ✅ ESLint configured
+- ⏳ Better Auth (to be installed in T005)
+- ⏳ API client (to be created in T042)
+- ⏳ Components (to be created in Phase 4)
+
+## Development Commands
+- `npm run dev`    – Start development server (http://localhost:3000)
+- `npm run build`  – Build for production
+- `npm run lint`   – Run ESLint
+- `npm run format` – Format code (when prettier is added)
