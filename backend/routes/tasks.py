@@ -44,9 +44,12 @@ def verify_user_access(request: Request, user_id: str = Path(...)) -> str:
         )
 
     if token_user_id != user_id:
+        print(f"=== DEBUG BACKEND: USER_ID MISMATCH ===")
+        print(f"=== Token user_id: {token_user_id}")
+        print(f"=== URL user_id: {user_id}")
         raise HTTPException(
             status_code=403,
-            detail="Access denied: Cannot access another user's tasks"
+            detail=f"Access denied: Token user_id '{token_user_id}' does not match URL user_id '{user_id}'"
         )
 
     return user_id

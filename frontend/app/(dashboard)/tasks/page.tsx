@@ -35,10 +35,11 @@ export default function TasksPage() {
 
   // Load tasks on mount and when filter changes
   useEffect(() => {
-    if (session?.user) {
+    if (session?.user?.id) {
       loadTasks();
     }
-  }, [session, statusFilter]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [session?.user?.id, statusFilter]);
 
   const loadTasks = async () => {
     if (!session?.user?.id) return;
@@ -71,7 +72,7 @@ export default function TasksPage() {
   const handleCreateTask = async (data: CreateTaskData) => {
     if (!session?.user?.id) return;
 
-    // Create optimistic task
+    // Create optimistic task (new tasks are always pending)
     const optimisticTask: Task = {
       id: `temp-${Date.now()}`,
       user_id: session.user.id,
@@ -82,20 +83,27 @@ export default function TasksPage() {
       updated_at: new Date().toISOString(),
     };
 
-    // T051: Optimistically add to list
-    setTasks((prev) => [optimisticTask, ...prev]);
+    // T051: Optimistically add to list ONLY if current filter would show it
+    // New tasks are always pending, so only add if filter is "all" or "pending"
+    if (statusFilter === "all" || statusFilter === "pending") {
+      setTasks((prev) => [optimisticTask, ...prev]);
+    }
 
     try {
       // Make actual API call
       const createdTask = await api.createTask(session.user.id, data);
 
-      // Replace optimistic task with real one
-      setTasks((prev) =>
-        prev.map((task) => (task.id === optimisticTask.id ? createdTask : task))
-      );
+      // Replace optimistic task with real one (only if it was added)
+      if (statusFilter === "all" || statusFilter === "pending") {
+        setTasks((prev) =>
+          prev.map((task) => (task.id === optimisticTask.id ? createdTask : task))
+        );
+      }
     } catch (err: any) {
-      // T051: Rollback on error
-      setTasks((prev) => prev.filter((task) => task.id !== optimisticTask.id));
+      // T051: Rollback on error (only if it was added)
+      if (statusFilter === "all" || statusFilter === "pending") {
+        setTasks((prev) => prev.filter((task) => task.id !== optimisticTask.id));
+      }
 
       if (err instanceof APIError && err.status === 401) {
         router.push("/signin");
@@ -180,11 +188,16 @@ export default function TasksPage() {
 
     const originalTask = editingTask;
 
-    // T051: Optimistically update
+    // T051: Optimistically update - preserve existing fields, only update title/description
     setTasks((prev) =>
       prev.map((t) =>
         t.id === editingTask.id
-          ? { ...t, ...data, updated_at: new Date().toISOString() }
+          ? {
+              ...t,
+              title: data.title,
+              description: data.description !== undefined ? data.description : t.description,
+              updated_at: new Date().toISOString()
+            }
           : t
       )
     );
